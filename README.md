@@ -1,1 +1,1 @@
-# IRCTC(train-booking)
+# IRCTC(train-ticket-booking)
