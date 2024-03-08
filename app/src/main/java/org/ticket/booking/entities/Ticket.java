@@ -6,7 +6,7 @@ public class Ticket {
 
     private String userId;
 
-    public Ticket() {
+    public Ticket(String userId) {
     }
 
     public String getUserId() {
