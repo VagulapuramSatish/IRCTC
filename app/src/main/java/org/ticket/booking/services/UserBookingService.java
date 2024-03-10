@@ -3,6 +3,7 @@ package org.ticket.booking.services;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.ticket.booking.entities.User;
+import org.ticket.booking.utilities.UserServiceUtil;
 
 import javax.imageio.IIOException;
 import java.io.File;
@@ -17,10 +18,10 @@ public class UserBookingService {
     private List<User> userList;
 
     private ObjectMapper objectMapper = new ObjectMapper();
-    private static final String USERS_PATH= "../localDb/uers.json";
+    private static final String USERS_PATH= "/Applications/java projects/IRCTC/app/src/main/java/org/ticket/booking/localDb/users.json";
 
-    public UserBookingService(User user) throws IOException {
-        this.user= user;
+    public UserBookingService(User user1) throws IOException {
+        this.user= user1;
         File users=new File(USERS_PATH);
         userList = objectMapper.readValue(users, new TypeReference<List<User>>() {});
 
