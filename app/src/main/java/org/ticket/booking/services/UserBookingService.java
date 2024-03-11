@@ -26,21 +26,43 @@ public class UserBookingService {
         userList = objectMapper.readValue(users, new TypeReference<List<User>>() {});
 
         public Boolean loginUser(){
-            Optional<User> foundUser = userList.stream().filter(user1 -> {
+            Optional<User> foundUser = userList.stream().filter(user -> {
                 return user1.getName().equals(user.getName()) && UserServiceUtil.checkPassword(user.getPassword(), user1.getHashedPassword());
             }).findFirst();
             return foundUser.isPresent();
         }
 
-        public Boolean signUp(User user1){
+        public Boolean signUp(User user){
             try{
-                userList.add(user1);
+                userList.add(user);
                 saveUserListToFile();
                 return Boolean.TRUE;
             }catch (IOException ex){
                 return Boolean.FALSE;
             }
         }
+
+        private void saveUserListToFile() throws IOException {
+            File usersFile = new File(USERS_PATH);
+            objectMapper.writeValue(usersFile, userList);
+        }
+
+
+        public void fetchBooking(){
+            user.printTickets();
+        }
+
+        public Boolean cancelBooking(String ticketId){
+
+            userList.stream().filter(user -> {
+                return user1.getUserId().equals(user.)
+            });
+
+            return Boolean.FALSE;
+        }
+
+
+
 
     }
 
