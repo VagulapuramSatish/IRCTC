@@ -1,4 +1,5 @@
 package org.ticket.booking.utilities;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UserServiceUtil {
     public static String hashPassword(String plainPassword) {
