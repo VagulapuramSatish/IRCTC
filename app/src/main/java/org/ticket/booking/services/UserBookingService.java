@@ -1,29 +1,20 @@
 package org.ticket.booking.services;
 
-import com.fasterxml.jackson.core.JsonParser;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ticket.booking.entities.Ticket;
-import ticket.booking.entities.Train;
-import ticket.booking.entities.User;
-import ticket.booking.util.UserServiceUtil;
+
+import org.ticket.booking.entities.Train;
+import org.ticket.booking.entities.User;
+import org.ticket.booking.utilities.UserServiceUtil;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
-
-import javax.imageio.IIOException;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class UserBookingService {
 
