@@ -6,7 +6,7 @@ import org.ticket.booking.services.UserBookingService;
 import org.ticket.booking.utilities.UserServiceUtil;
 
 import java.io.IOException;
-import java.sql.Time;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -104,5 +104,9 @@ public class App {
                     break;
             }
         }
+    }
+
+    public Object getGreeting() {
+        return "Hello";
     }
 }
