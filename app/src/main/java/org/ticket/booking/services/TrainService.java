@@ -5,7 +5,6 @@ import org.ticket.booking.entities.Train;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -17,11 +16,16 @@ import java.util.stream.IntStream;
 public class TrainService {
     private List<Train> trainList;
     private ObjectMapper objectMapper = new ObjectMapper();
-    private static final String TRAIN_DB_PATH = "../localDB/trains.json";
+    private static final String TRAIN_DB_PATH = "/Applications/java projects/IRCTC/app/src/main/resources/trains.json";
 
     public TrainService() throws IOException {
-        File trains = new File(TRAIN_DB_PATH);
-        trainList = objectMapper.readValue(trains, new TypeReference<List<Train>>() {});
+        File trainsFile = new File(TRAIN_DB_PATH);
+        if (!trainsFile.exists()) {
+            // If the file doesn't exist, initialize an empty list
+            trainList = List.of();
+        } else {
+            trainList = objectMapper.readValue(trainsFile, new TypeReference<List<Train>>() {});
+        }
     }
 
     public List<Train> searchTrains(String source, String destination) {
@@ -59,6 +63,7 @@ public class TrainService {
             addTrain(updatedTrain);
         }
     }
+
     private void saveTrainListToFile() {
         try {
             objectMapper.writeValue(new File(TRAIN_DB_PATH), trainList);
@@ -75,6 +80,4 @@ public class TrainService {
 
         return sourceIndex != -1 && destinationIndex != -1 && sourceIndex < destinationIndex;
     }
-
-
 }

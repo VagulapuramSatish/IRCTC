@@ -3,28 +3,21 @@ package org.ticket.booking.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-
 import org.ticket.booking.entities.Train;
 import org.ticket.booking.entities.User;
 import org.ticket.booking.utilities.UserServiceUtil;
 import java.io.File;
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-
 public class UserBookingService {
 
     private ObjectMapper objectMapper = new ObjectMapper();
-
     private List<User> userList;
-
     private User user;
-
-    private final String USER_FILE_PATH = "app/src/main/java/ticket/booking/localDb/users.json";
+    private final String USER_FILE_PATH = "/Applications/java projects/IRCTC/app/src/main/java/org/ticket/booking/localDb/users.json";
 
     public UserBookingService(User user) throws IOException {
         this.user = user;
@@ -36,7 +29,11 @@ public class UserBookingService {
     }
 
     private void loadUserListFromFile() throws IOException {
-        userList = objectMapper.readValue(new File(USER_FILE_PATH), new TypeReference<List<User>>() {});
+        File file = new File(USER_FILE_PATH);
+        if (!file.exists()) {
+            throw new IOException("User data file not found: " + USER_FILE_PATH);
+        }
+        userList = objectMapper.readValue(file, new TypeReference<List<User>>() {});
     }
 
     public Boolean loginUser(){
