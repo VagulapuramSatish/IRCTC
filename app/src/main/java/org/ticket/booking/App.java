@@ -22,9 +22,11 @@ public class App {
         UserBookingService userBookingService;
         try{
             userBookingService = new UserBookingService();
-        }catch(IOException ex){
-            System.out.println("There is something wrong");
+        }catch(IOException ex) {
+            ex.printStackTrace();
+            System.out.println("There is something wrong: " + ex.getMessage());
             return;
+
         }
         while(option!=7){
             System.out.println("Choose option");
@@ -71,7 +73,7 @@ public class App {
                     int index = 1;
                     for (Train t: trains){
                         System.out.println(index+" Train id : "+t.getTrainId());
-                        for (Map.Entry<String, String> entry: t.getStationTimes().entrySet()){
+                        for (Map.Entry<String, String> entry: t.getStations().entrySet()){
                             System.out.println("station "+entry.getKey()+" time: "+entry.getValue());
                         }
                     }

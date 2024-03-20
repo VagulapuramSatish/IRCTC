@@ -7,6 +7,7 @@ import org.ticket.booking.entities.Train;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -22,6 +23,11 @@ public class TrainService {
 
     public TrainService() throws IOException {
         File trains = new File(TRAIN_DB_PATH);
+
+        System.out.println("Loading JSON data from file: " + TRAIN_DB_PATH);
+        // Debug statement to print out the JSON data before deserialization
+        System.out.println("JSON data: " + objectMapper.writeValueAsString(trains));
+
         trainList = objectMapper.readValue(trains, new TypeReference<List<Train>>() {});
     }
 
@@ -70,7 +76,7 @@ public class TrainService {
     }
 
     private boolean validTrain(Train train, String source, String destination) {
-        List<String> stationOrder = train.getStations();
+        List<String> stationOrder = new ArrayList<>(train.getStations().keySet());
 
         int sourceIndex = stationOrder.indexOf(source.toLowerCase());
         int destinationIndex = stationOrder.indexOf(destination.toLowerCase());
