@@ -1,22 +1,30 @@
 package org.ticket.booking.services;
 
-
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.ticket.booking.entities.Ticket;
 import org.ticket.booking.entities.Train;
 import org.ticket.booking.entities.User;
 import org.ticket.booking.utilities.UserServiceUtil;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
-public class UserBookingService {
+public class UserBookingService{
 
     private ObjectMapper objectMapper = new ObjectMapper();
+
     private List<User> userList;
+
     private User user;
+
     private final String USER_FILE_PATH = "/Applications/java projects/IRCTC/app/src/main/java/org/ticket/booking/localDb/users.json";
 
     public UserBookingService(User user) throws IOException {
@@ -29,11 +37,7 @@ public class UserBookingService {
     }
 
     private void loadUserListFromFile() throws IOException {
-        File file = new File(USER_FILE_PATH);
-        if (!file.exists()) {
-            throw new IOException("User data file not found: " + USER_FILE_PATH);
-        }
-        userList = objectMapper.readValue(file, new TypeReference<List<User>>() {});
+        userList = objectMapper.readValue(new File(USER_FILE_PATH), new TypeReference<List<User>>() {});
     }
 
     public Boolean loginUser(){
@@ -57,6 +61,7 @@ public class UserBookingService {
         File usersFile = new File(USER_FILE_PATH);
         objectMapper.writeValue(usersFile, userList);
     }
+
     public void fetchBookings(){
         Optional<User> userFetched = userList.stream().filter(user1 -> {
             return user1.getName().equals(user.getName()) && UserServiceUtil.checkPassword(user.getPassword(), user1.getHashedPassword());
@@ -104,5 +109,4 @@ public class UserBookingService {
             return Boolean.FALSE;
         }
     }
-
 }

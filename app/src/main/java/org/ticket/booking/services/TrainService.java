@@ -1,9 +1,9 @@
 package org.ticket.booking.services;
 
-import org.ticket.booking.entities.Train;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import org.ticket.booking.entities.Train;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,18 +14,15 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class TrainService {
+
+    private ObjectMapper objectMapper = new ObjectMapper().setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE);
+
     private List<Train> trainList;
-    private ObjectMapper objectMapper = new ObjectMapper();
-    private static final String TRAIN_DB_PATH = "/Applications/java projects/IRCTC/app/src/main/resources/trains.json";
+    private static final String TRAIN_DB_PATH = "/Applications/java projects/IRCTC/app/src/main/java/org/ticket/booking/localDb/trains.json";
 
     public TrainService() throws IOException {
-        File trainsFile = new File(TRAIN_DB_PATH);
-        if (!trainsFile.exists()) {
-            // If the file doesn't exist, initialize an empty list
-            trainList = List.of();
-        } else {
-            trainList = objectMapper.readValue(trainsFile, new TypeReference<List<Train>>() {});
-        }
+        File trains = new File(TRAIN_DB_PATH);
+        trainList = objectMapper.readValue(trains, new TypeReference<List<Train>>() {});
     }
 
     public List<Train> searchTrains(String source, String destination) {
